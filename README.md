@@ -1,8 +1,10 @@
+# Access at: [Notes App](https://juliusker.github.io/notes-matrix/)
+
 # Project is doplyed using github pages
 The deployment porcess was followed in the following link: [Deploying a React App* to GitHub Pages](https://github.com/gitname/react-gh-pages)
-## [Notes App](https://juliusker.github.io/notes-matrix/)
 
-
+#### To deploy the latest updates user the following code:
+```$ npm run deploy -- -m "commit message"```
 
 # Getting Started with Create React App
 
