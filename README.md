@@ -1,3 +1,9 @@
+# Project is doplyed using github pages
+The deployment porcess was followed in the following link: [Deploying a React App* to GitHub Pages](https://github.com/gitname/react-gh-pages)
+## [Notes App](https://juliusker.github.io/notes-matrix/)
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
