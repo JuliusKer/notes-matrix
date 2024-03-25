@@ -37,8 +37,11 @@ function App() {
     const [unplacedNotes, setUnplacedNotes] = useState([]);
 
     const containers = Array.from({ length: rows * columns }, (_, index) => index + 1);
-    const addNote = () => {
-        const newNote = {id: rows * columns + unplacedNotes.length, text: `note${unplacedNotes.length + placedNotes.length + 1}`};
+    function addNote() {
+        const highestId = unplacedNotes.reduce((acc, note) => {
+            return note.id > acc ? note.id : acc;
+        });
+        const newNote = {id: highestId + 1, text: `note${unplacedNotes.length + placedNotes.length + 1}`};
         setUnplacedNotes([...unplacedNotes, newNote]);
     }
     return (
@@ -48,6 +51,9 @@ function App() {
             <button className='button rowButton2' onClick={() => setRows(rows - 1)}>Remove Row</button>
             <button className='button colButton1' onClick={() => setColumns(columns + 1)}>Add Column</button>
             <button className='button colButton2' onClick={() => setColumns(columns - 1)}>Remove Column</button>
+            <Droppable key={'delete'} id={'delete'}>
+                Delete Note
+            </Droppable>
             <Grid columns={5}>
                 {unplacedNotes.map((note) => (
                     <Draggable id={note.id} handleNoteClick={handleUnplacedNoteClick}>
@@ -107,6 +113,14 @@ function App() {
         const replacedNote = placedNotes.find((note) => note.id === over?.id);
 
         if (over) {
+            if (over.id === 'delete') {
+                if (movedUnplacedNote) {
+                    setUnplacedNotes(unplacedNotes.filter((note) => note.id !== active.id));
+                } else {
+                    setPlacedNotes(placedNotes.filter((note) => note.id !== active.id));
+                }
+                return;
+            }
             if (movedUnplacedNote) {
                 let newUnplacedNotes = unplacedNotes.filter((note) => note.id !== active.id);
                 let newPlacedNotes = placedNotes;

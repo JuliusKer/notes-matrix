@@ -11,30 +11,30 @@
 
 .addButton {
     background-color: #f1356d;
-    top: 40px;
+    top: 10px;
     left: 60px;
 }
 
 .rowButton1 {
     background-color: #355bf1;
-    top: 100px;
+    top: 70px;
     left: 10px;
 }
 
 .rowButton2 {
     background-color: #355bf1;
-    top: 100px;
+    top: 70px;
     left: 110px;
 }
 
 .colButton1 {
     background-color: #228608;
-    top: 160px;
+    top: 130px;
     left: 10px;
 }
 
 .colButton2 {
     background-color: #228608;
-    top: 160px;
+    top: 130px;
     left: 110px;
 }
