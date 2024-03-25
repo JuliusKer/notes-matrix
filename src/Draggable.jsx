@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDraggable} from '@dnd-kit/core';
 
 export function Draggable(props) {
@@ -22,9 +22,13 @@ export function Draggable(props) {
         transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     };
 
+    const handleClick = () => {
+        props.handleNoteClick(props.id);
+    }
+
 
     return (
-        <button ref={setNodeRef} style={inlineStyle} {...listeners} {...attributes}>
+        <button ref={setNodeRef} style={inlineStyle} {...listeners} {...attributes} onClick={handleClick}>
             {props.children}
         </button>
     );

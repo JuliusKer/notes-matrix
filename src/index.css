@@ -1,0 +1,40 @@
+.button {
+    position: fixed;
+    color: white;
+    border: none;
+    padding: 8px;
+    height: 40px;
+    width: 80px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.addButton {
+    background-color: #f1356d;
+    top: 40px;
+    left: 60px;
+}
+
+.rowButton1 {
+    background-color: #355bf1;
+    top: 100px;
+    left: 10px;
+}
+
+.rowButton2 {
+    background-color: #355bf1;
+    top: 100px;
+    left: 110px;
+}
+
+.colButton1 {
+    background-color: #228608;
+    top: 160px;
+    left: 10px;
+}
+
+.colButton2 {
+    background-color: #228608;
+    top: 160px;
+    left: 110px;
+}
