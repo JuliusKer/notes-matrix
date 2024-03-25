@@ -9,32 +9,50 @@
     cursor: pointer;
 }
 
+.centered {
+    text-align: center;
+}
+
 .addButton {
-    background-color: #f1356d;
+    background-color: rgb(40, 155, 10);
     top: 10px;
     left: 60px;
 }
 
 .rowButton1 {
-    background-color: #355bf1;
+    background-color: #289b0a;
     top: 70px;
     left: 10px;
 }
 
 .rowButton2 {
-    background-color: #355bf1;
+    background-color: #f8004c;
     top: 70px;
     left: 110px;
 }
 
 .colButton1 {
-    background-color: #228608;
+    background-color: #289b0a;
     top: 130px;
     left: 10px;
 }
 
 .colButton2 {
-    background-color: #228608;
+    background-color: #f8004c;
     top: 130px;
     left: 110px;
+}
+
+.saveButton {
+    background-color: rgba(54, 54, 54, 0.84);
+    width: 140px;
+    top: 360px;
+    left: 10px;
+}
+
+.loadButton {
+    background-color: rgba(54, 54, 54, 0.84);
+    width: 140px;
+    top: 420px;
+    left: 10px;
 }

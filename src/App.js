@@ -1,109 +1,29 @@
 import React, {useState} from 'react';
-import {
-    DndContext,
-    KeyboardSensor,
-    MouseSensor,
-    PointerSensor,
-    TouchSensor,
-    useSensor,
-    useSensors
-} from '@dnd-kit/core';
-
-import {Droppable} from './Droppable';
-import {Draggable} from './Draggable';
-import Grid from "./Grid";
+import {DndContext} from '@dnd-kit/core';
+import AppPage from "./AppPage";
+import {useCustomSensors} from "./helpers";
 
 function App() {
-
-    const pointerSensor = useSensor(PointerSensor, {
-        activationConstraint: {
-            distance: 0.01
-        }
-    })
-    const mouseSensor = useSensor(MouseSensor)
-    const touchSensor = useSensor(TouchSensor)
-    const keyboardSensor = useSensor(KeyboardSensor)
-
-    const sensors = useSensors(
-        mouseSensor,
-        touchSensor,
-        keyboardSensor,
-        pointerSensor
-    )
 
     const [columns, setColumns] = useState(5);
     const [rows, setRows] = useState(5);
     const [placedNotes, setPlacedNotes] = useState([]);
     const [unplacedNotes, setUnplacedNotes] = useState([]);
 
-    const containers = Array.from({ length: rows * columns }, (_, index) => index + 1);
-    function addNote() {
-        const highestId = unplacedNotes.reduce((acc, note) => {
-            return note.id > acc ? note.id : acc;
-        });
-        const newNote = {id: highestId + 1, text: `note${unplacedNotes.length + placedNotes.length + 1}`};
-        setUnplacedNotes([...unplacedNotes, newNote]);
-    }
     return (
-        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-            <button className='button addButton' onClick={() => addNote()}>Add Note</button>
-            <button className='button rowButton1' onClick={() => setRows(rows + 1)}>Add Row</button>
-            <button className='button rowButton2' onClick={() => setRows(rows - 1)}>Remove Row</button>
-            <button className='button colButton1' onClick={() => setColumns(columns + 1)}>Add Column</button>
-            <button className='button colButton2' onClick={() => setColumns(columns - 1)}>Remove Column</button>
-            <Droppable key={'delete'} id={'delete'}>
-                Delete Note
-            </Droppable>
-            <Grid columns={5}>
-                {unplacedNotes.map((note) => (
-                    <Draggable id={note.id} handleNoteClick={handleUnplacedNoteClick}>
-                        {note.text}
-                    </Draggable>
-                ))}
-            </Grid>
-            <Grid columns={columns}>
-                {containers.map((id) => {
-                    const note = placedNotes.find((note) => note.id === id);
-                    return (
-                        <Droppable key={id} id={id}>
-                            {note ?
-                                <Draggable key={note.text} id={note.id} handleNoteClick={handlePlacedNoteClick}>
-                                    {note.text}
-                                </Draggable>
-                                : undefined}
-                        </Droppable>
-                    );
-                })}
-            </Grid>
+        <DndContext sensors={useCustomSensors()} onDragEnd={handleDragEnd}>
+            <AppPage
+                unplacedNotes={unplacedNotes}
+                placedNotes={placedNotes}
+                setPlacedNotes={setPlacedNotes}
+                setUnplacedNotes={setUnplacedNotes}
+                rows={rows}
+                columns={columns}
+                setRows={setRows}
+                setColumns={setColumns}
+            />
         </DndContext>
     );
-
-    function handlePlacedNoteClick(id) {
-        const note = placedNotes.find((note) => note.id === id);
-        const newText = prompt('Enter new text:', note.text);
-        if (newText) {
-            const newPlacedNotes = placedNotes.map((note) => {
-                if (note.id === id) {
-                    return {...note, text: newText};
-                }
-                return note;
-            });
-            setPlacedNotes(newPlacedNotes);
-        }
-    }
-
-    function handleUnplacedNoteClick(id) {
-        const newText = prompt('Enter new text:');
-        if (newText) {
-            const newUnplacedNotes = unplacedNotes.map((note) => {
-                if (note.id === id) {
-                    return {...note, text: newText};
-                }
-                return note;
-            });
-            setUnplacedNotes(newUnplacedNotes);
-        }
-    }
 
     function handleDragEnd(event) {
         const {active, over} = event;
@@ -167,6 +87,6 @@ function App() {
             setPlacedNotes(newPlacedNotes);
         }
     }
-};
+}
 
 export default App;
