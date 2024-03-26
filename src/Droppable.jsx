@@ -18,7 +18,7 @@ export function Droppable(props) {
     };
 
     const deleteStyle = {
-        backgroundColor: isOver ? 'red' : '#FF003F5E',
+        backgroundColor: isOver ? 'red' : 'rgba(255,0,63,0.53)',
         transformOrigin: '50% 50%',
         height: '140px',
         width: '140px',
@@ -28,7 +28,7 @@ export function Droppable(props) {
         alignItems: 'center',
         position: 'fixed',
         top: '200px',
-        left: '10px',
+        left: '30px',
     };
 
 

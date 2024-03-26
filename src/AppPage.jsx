@@ -2,9 +2,11 @@ import {Droppable} from "./Droppable";
 import Grid from "./Grid";
 import {Draggable} from "./Draggable";
 import React from "react";
+import {InstructionModal} from "./InstructionModal";
 
 function AppPage(props) {
     const {unplacedNotes, placedNotes, setPlacedNotes, setUnplacedNotes, rows, columns, setRows, setColumns} = props;
+    const [instructionModalOpen, setInstructionModalOpen] = React.useState(false);
 
     const containers = Array.from({ length: rows * columns }, (_, index) => index + 1);
 
@@ -65,6 +67,7 @@ function AppPage(props) {
 
     return (
         <div>
+            <InstructionModal isOpen={instructionModalOpen} onClose={() => setInstructionModalOpen(false)}/>
             <h1 className='centered'>Notes App</h1>
             <p className='centered'>
                 Welcome to the Notes App! Here you can structure your notes. <br></br>
@@ -73,20 +76,17 @@ function AppPage(props) {
                 {/*Move Notes by dragging them to a new location. <br></br>*/}
                 {/*Edit Notes by clicking on them. <br></br>*/}
             </p>
-            <button className='button addButton' onClick={() => addNote()}>New Note</button>
-            <button className='button rowButton1' onClick={() => setRows(rows + 1)}>+ Row</button>
-            <button className='button rowButton2' onClick={() => setRows(rows - 1)}>- Row</button>
-            <button className='button colButton1' onClick={() => setColumns(columns + 1)}>+ Column</button>
-            <button className='button colButton2' onClick={() => setColumns(columns - 1)}>- Column</button>
-            <Droppable key={'delete'} id={'delete'}>
-                Delete Note
-            </Droppable>
-            <button className='button saveButton' onClick={() => handleSave()}>
-                Save Notes
-            </button>
-            <button className='button loadButton' onClick={() => handleLoad()}>
-                Load Notes
-            </button>
+            <div className='actionMenu'>
+                <button className='button addButton' onClick={() => addNote()}>New Note</button>
+                <button className='button rowButton1' onClick={() => setRows(rows + 1)}>+ Row</button>
+                <button className='button rowButton2' onClick={() => setRows(rows - 1)}>- Row</button>
+                <button className='button colButton1' onClick={() => setColumns(columns + 1)}>+ Column</button>
+                <button className='button colButton2' onClick={() => setColumns(columns - 1)}>- Column</button>
+                <Droppable key={'delete'} id={'delete'}>Delete Note</Droppable>
+                <button className='button saveButton' onClick={() => handleSave()}>Save Notes</button>
+                <button className='button loadButton' onClick={() => handleLoad()}>Load Notes</button>
+                <button className='button modalButton' onClick={() => setInstructionModalOpen(true)}>Instructions</button>
+            </div>
             <Grid columns={5}>
                 {unplacedNotes.map((note) => (
                     <Draggable id={note.id} handleNoteClick={handleUnplacedNoteClick}>
