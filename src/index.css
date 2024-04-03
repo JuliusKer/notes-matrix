@@ -9,17 +9,6 @@ li {
     padding: 6px;
 }
 
-.button {
-    position: fixed;
-    color: white;
-    border: none;
-    padding: 8px;
-    height: 40px;
-    width: 80px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
 .actionMenu {
     position: fixed;
     top: 0;
@@ -34,43 +23,16 @@ li {
     text-align: center;
 }
 
-.modal {
-    display: none;
+
+.button {
     position: fixed;
-    z-index: 1;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 400px;
-    background-color: rgb(255, 217, 15);
-    border: 1px solid black;
+    color: white;
+    border: none;
+    padding: 8px;
+    height: 40px;
+    width: 80px;
     border-radius: 8px;
-    padding: 20px;
-}
-/*add a header and footer banner in the modal*/
-.modalHeader {
-    background-color: rgb(245, 208, 12);
-    padding: 5px;
-    border-radius: 8px;
-}
-
-.modalFooter {
-    text-align: center;
-    position: absolute;
-    bottom: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    width: 580px;
-    background-color: rgb(245, 208, 12);
-}
-
-.modalContent {
-    text-align: center;
-}
-
-.open {
-    display: block;
+    cursor: pointer;
 }
 
 .addButton {
@@ -117,19 +79,9 @@ li {
     left: 30px;
 }
 
-.modalButton {
+.instructionsButton {
     background-color: rgba(54, 54, 54, 0.84);
     width: 140px;
     top: 480px;
     left: 30px;
-}
-
-.closeButton {
-    border: none;
-    padding: 8px;
-    height: 40px;
-    width: 80px;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: rgb(180, 179, 179);
 }

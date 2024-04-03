@@ -1,12 +1,15 @@
-import {Droppable} from "./Droppable";
-import Grid from "./Grid";
-import {Draggable} from "./Draggable";
+import {Droppable} from "./components/Droppable";
+import Grid from "./components/Grid";
+import {Draggable} from "./components/Draggable";
 import React from "react";
-import {InstructionModal} from "./InstructionModal";
+import {InstructionModal} from "./modals/InstructionModal";
+import {LoadNotesModal} from "./modals/LoadNotesModal";
 
 function AppPage(props) {
     const {unplacedNotes, placedNotes, setPlacedNotes, setUnplacedNotes, rows, columns, setRows, setColumns} = props;
+
     const [instructionModalOpen, setInstructionModalOpen] = React.useState(false);
+    const [loadNotesModalOpen, setLoadNotesModalOpen] = React.useState(false);
 
     const containers = Array.from({ length: rows * columns }, (_, index) => index + 1);
 
@@ -54,9 +57,21 @@ function AppPage(props) {
         localStorage.setItem('notes', notesJson);
     }
 
-    function handleLoad() {
-        const notesJson = localStorage.getItem('notes');
-        if (notesJson) {
+    function handleSaveWithName() {
+        const name = prompt('Enter name to store the current notes under:');
+        const notes = {unplacedNotes, placedNotes, rows, columns};
+        const notesJson = JSON.stringify(notes);
+        localStorage.setItem(name, notesJson);
+    }
+
+    function handleLoad(name) {
+        // setLoadNotesModalOpen(true)
+        // console.log(Object.keys(localStorage))
+        // const name = prompt('Enter name to store the current notes under:');
+        // get the name of the local storage ites to load from the user. In the promp show all existing local storage items
+        // const name = prompt('Enter name to load the notes from:', Object.keys(localStorage));
+        if (localStorage.getItem(name)) {
+            const notesJson = localStorage.getItem(name);
             const notes = JSON.parse(notesJson);
             setUnplacedNotes(notes.unplacedNotes);
             setPlacedNotes(notes.placedNotes);
@@ -68,13 +83,10 @@ function AppPage(props) {
     return (
         <div>
             <InstructionModal isOpen={instructionModalOpen} onClose={() => setInstructionModalOpen(false)}/>
+            <LoadNotesModal isOpen={loadNotesModalOpen} onClose={handleLoad} setModalClose={() => setLoadNotesModalOpen(false)}/>
             <h1 className='centered'>Notes App</h1>
             <p className='centered'>
                 Welcome to the Notes App! Here you can structure your notes. <br></br>
-                {/*Create and Delete Notes through the buttons on the left. <br></br>*/}
-                {/*Add or Remove Rows and Columns to change the layout through the buttons on the left. <br></br>*/}
-                {/*Move Notes by dragging them to a new location. <br></br>*/}
-                {/*Edit Notes by clicking on them. <br></br>*/}
             </p>
             <div className='actionMenu'>
                 <button className='button addButton' onClick={() => addNote()}>New Note</button>
@@ -83,13 +95,14 @@ function AppPage(props) {
                 <button className='button colButton1' onClick={() => setColumns(columns + 1)}>+ Column</button>
                 <button className='button colButton2' onClick={() => setColumns(columns - 1)}>- Column</button>
                 <Droppable key={'delete'} id={'delete'}>Delete Note</Droppable>
-                <button className='button saveButton' onClick={() => handleSave()}>Save Notes</button>
-                <button className='button loadButton' onClick={() => handleLoad()}>Load Notes</button>
-                <button className='button modalButton' onClick={() => setInstructionModalOpen(true)}>Instructions</button>
+                <button className='button saveButton' onClick={() => handleSaveWithName()}>Save Notes</button>
+                <button className='button loadButton' onClick={() => setLoadNotesModalOpen(true)}>Load Notes</button>
+                <button className='button instructionsButton' onClick={() => setInstructionModalOpen(true)}>Instructions
+                </button>
             </div>
             <Grid columns={5}>
                 {unplacedNotes.map((note) => (
-                    <Draggable id={note.id} handleNoteClick={handleUnplacedNoteClick}>
+                    <Draggable key={note.id} id={note.id} handleNoteClick={handleUnplacedNoteClick}>
                         {note.text}
                     </Draggable>
                 ))}
@@ -100,7 +113,7 @@ function AppPage(props) {
                     return (
                         <Droppable key={id} id={id}>
                             {note ?
-                                <Draggable key={note.text} id={note.id} handleNoteClick={handlePlacedNoteClick}>
+                                <Draggable key={note.id} id={note.id} handleNoteClick={handlePlacedNoteClick}>
                                     {note.text}
                                 </Draggable>
                                 : undefined}

@@ -1,0 +1,15 @@
+.selectContainer {
+    margin: 10px 0;
+}
+
+.selectContainer label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.selectContainer select {
+    width: 150px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
