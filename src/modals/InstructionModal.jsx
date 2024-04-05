@@ -17,6 +17,7 @@ export function InstructionModal(props) {
                 <li>Add or Remove Rows and Columns to change the layout through the buttons on the left.</li>
                 <li>Move Notes by dragging them to a new location.</li>
                 <li>Edit Notes by clicking on them.</li>
+                <li>Save and Load Notes through the Manage Notes button.</li>
             </ol>
         </Modal>
     );

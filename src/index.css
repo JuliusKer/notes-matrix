@@ -65,23 +65,36 @@ li {
     left: 110px;
 }
 
-.saveButton {
+.manageButton {
     background-color: rgba(54, 54, 54, 0.84);
     width: 140px;
     top: 360px;
     left: 30px;
 }
 
-.loadButton {
+.instructionsButton {
     background-color: rgba(54, 54, 54, 0.84);
     width: 140px;
     top: 420px;
     left: 30px;
 }
 
-.instructionsButton {
-    background-color: rgba(54, 54, 54, 0.84);
-    width: 140px;
-    top: 480px;
-    left: 30px;
+.manageNotesContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.manageNotesContainer > div:first-child {
+    flex: 0 0 30%;
+    padding: 10px;
+}
+
+.manageNotesContainer > div:last-child {
+    flex: 0 0 70%;
+    padding: 10px;
+}
+
+.manageNotesContainer button {
+    margin-top: 10px;
+    width: 160px;
 }

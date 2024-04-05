@@ -4,12 +4,14 @@ import {Draggable} from "./components/Draggable";
 import React from "react";
 import {InstructionModal} from "./modals/InstructionModal";
 import {LoadNotesModal} from "./modals/LoadNotesModal";
+import {ManageNotesModal} from "./modals/ManageNotesModal";
 
 function AppPage(props) {
     const {unplacedNotes, placedNotes, setPlacedNotes, setUnplacedNotes, rows, columns, setRows, setColumns} = props;
 
     const [instructionModalOpen, setInstructionModalOpen] = React.useState(false);
     const [loadNotesModalOpen, setLoadNotesModalOpen] = React.useState(false);
+    const [manageNotesModalOpen, setManageNotesModalOpen] = React.useState(false);
 
     const containers = Array.from({ length: rows * columns }, (_, index) => index + 1);
 
@@ -57,19 +59,14 @@ function AppPage(props) {
         localStorage.setItem('notes', notesJson);
     }
 
-    function handleSaveWithName() {
-        const name = prompt('Enter name to store the current notes under:');
+    function handleSaveWithName(name) {
+        // const name = prompt('Enter name to store the current notes under:');
         const notes = {unplacedNotes, placedNotes, rows, columns};
         const notesJson = JSON.stringify(notes);
         localStorage.setItem(name, notesJson);
     }
 
     function handleLoad(name) {
-        // setLoadNotesModalOpen(true)
-        // console.log(Object.keys(localStorage))
-        // const name = prompt('Enter name to store the current notes under:');
-        // get the name of the local storage ites to load from the user. In the promp show all existing local storage items
-        // const name = prompt('Enter name to load the notes from:', Object.keys(localStorage));
         if (localStorage.getItem(name)) {
             const notesJson = localStorage.getItem(name);
             const notes = JSON.parse(notesJson);
@@ -80,10 +77,24 @@ function AppPage(props) {
         }
     }
 
+    function setNotes(notes) {
+        setUnplacedNotes(notes.unplacedNotes);
+        setPlacedNotes(notes.placedNotes);
+        setRows(notes.rows);
+        setColumns(notes.columns);
+    }
+
     return (
         <div>
             <InstructionModal isOpen={instructionModalOpen} onClose={() => setInstructionModalOpen(false)}/>
             <LoadNotesModal isOpen={loadNotesModalOpen} onClose={handleLoad} setModalClose={() => setLoadNotesModalOpen(false)}/>
+            <ManageNotesModal
+                isOpen={manageNotesModalOpen}
+                setModalClose={() => setManageNotesModalOpen(false)}
+                setNotes={setNotes}
+                saveNotes={handleSaveWithName}
+                currentNotes={{unplacedNotes, placedNotes}}
+            />
             <h1 className='centered'>Notes App</h1>
             <p className='centered'>
                 Welcome to the Notes App! Here you can structure your notes. <br></br>
@@ -95,8 +106,7 @@ function AppPage(props) {
                 <button className='button colButton1' onClick={() => setColumns(columns + 1)}>+ Column</button>
                 <button className='button colButton2' onClick={() => setColumns(columns - 1)}>- Column</button>
                 <Droppable key={'delete'} id={'delete'}>Delete Note</Droppable>
-                <button className='button saveButton' onClick={() => handleSaveWithName()}>Save Notes</button>
-                <button className='button loadButton' onClick={() => setLoadNotesModalOpen(true)}>Load Notes</button>
+                <button className='button manageButton' onClick={() => setManageNotesModalOpen(true)}>Manage Notes</button>
                 <button className='button instructionsButton' onClick={() => setInstructionModalOpen(true)}>Instructions
                 </button>
             </div>
