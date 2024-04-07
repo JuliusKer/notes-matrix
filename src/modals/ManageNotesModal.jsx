@@ -28,6 +28,27 @@ export function ManageNotesModal(props) {
         setProvidedName('')
     }
 
+    const saveNotesToFile = () => {
+        const link = document.createElement("a");
+        const notesJson = localStorage.getItem(selectedNote);
+        const file = new Blob([notesJson], { type: 'text/plain' });
+        link.href = URL.createObjectURL(file);
+        link.download = "sample.txt";
+        link.click();
+        URL.revokeObjectURL(link.href);
+    };
+
+    const loadNotesFromFile = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const notesJson = e.target.result;
+            const notes = JSON.parse(notesJson);
+            props.setNotes(notes);
+        }
+        reader.readAsText(file);
+    }
+
     const displayNotes = (notes) => (
         <div>
             <h3>Placed Notes:</h3>
@@ -93,12 +114,27 @@ export function ManageNotesModal(props) {
                             options={options}
                             onChange={setSelectedNote}
                         />
-                        <button className='submitButton' onClick={loadNotes}>
-                            Load selected Notes
-                        </button>
-                        <button className='closeButton' onClick={deleteNotes}>
-                            Delete selected Notes
-                        </button>
+                        <div className='manageActionsContainer'>
+                            <span className='container'>
+                                <p>Local Storage</p>
+                                <button className='loadButton' onClick={loadNotes}>
+                                    Load
+                                </button>
+                                <button className='closeButton' onClick={deleteNotes}>
+                                    Delete
+                                </button>
+                            </span>
+                            <span className='container'>
+                                <p>File</p>
+                                <button className='loadButton'
+                                    onClick={loadNotesFromFile}>
+                                    Load
+                                </button>
+                                <button className='submitButton' onClick={saveNotesToFile}>
+                                    Save
+                                </button>
+                            </span>
+                        </div>
                     </div>
                     <div>
                         {displayNotes(notes)}

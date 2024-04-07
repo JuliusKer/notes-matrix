@@ -57,11 +57,13 @@
     text-align: center;
 }
 
+.loadButton,
 .closeButton,
 .submitButton {
     cursor: pointer;
     padding: 10px;
     margin: 5px;
+    width: 80px;
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -85,6 +87,15 @@
     background-color: #45a049;
 }
 
+.loadButton {
+    background-color: #2196F3;
+    color: white;
+}
+
+.loadButton:hover {
+    background-color: #0b7dda;
+}
+
 .tabs {
     display: flex;
     justify-content: space-between;
@@ -99,5 +110,4 @@
 
 .tabs button.selected {
     background-color: #ffffff;
-    /*color: white;*/
 }

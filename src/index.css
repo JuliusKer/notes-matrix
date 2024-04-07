@@ -42,25 +42,25 @@ li {
 }
 
 .rowButton1 {
-    background-color: #289b0a;
+    background-color: #4CAF50;
     top: 70px;
     left: 10px;
 }
 
 .rowButton2 {
-    background-color: #f8004c;
+    background-color: #f44336;
     top: 70px;
     left: 110px;
 }
 
 .colButton1 {
-    background-color: #289b0a;
+    background-color: #4CAF50;
     top: 130px;
     left: 10px;
 }
 
 .colButton2 {
-    background-color: #f8004c;
+    background-color: #f44336;
     top: 130px;
     left: 110px;
 }
@@ -82,19 +82,30 @@ li {
 .manageNotesContainer {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 
 .manageNotesContainer > div:first-child {
     flex: 0 0 30%;
-    padding: 10px;
 }
 
 .manageNotesContainer > div:last-child {
     flex: 0 0 70%;
-    padding: 10px;
 }
 
 .manageNotesContainer button {
     margin-top: 10px;
     width: 160px;
+}
+
+.manageNotesContainer .container {
+    flex: 0 0 50%;
+}
+
+.manageNotesContainer .container button {
+    width: 80px;
+}
+
+.manageNotesContainer .container p {
+    margin-bottom: 0;
 }

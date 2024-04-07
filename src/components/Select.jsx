@@ -11,7 +11,7 @@ export function Select(props) {
               onChange={e => onChange(e.target.value)}
           >
               {map(options, (option) => (
-                  <option value={option.value}>{option.label}</option>
+                  <option key={option.value} value={option.value}>{option.label}</option>
               ))}
           </select>
       </div>

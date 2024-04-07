@@ -10,7 +10,6 @@ function AppPage(props) {
     const {unplacedNotes, placedNotes, setPlacedNotes, setUnplacedNotes, rows, columns, setRows, setColumns} = props;
 
     const [instructionModalOpen, setInstructionModalOpen] = React.useState(false);
-    const [loadNotesModalOpen, setLoadNotesModalOpen] = React.useState(false);
     const [manageNotesModalOpen, setManageNotesModalOpen] = React.useState(false);
 
     const containers = Array.from({ length: rows * columns }, (_, index) => index + 1);
@@ -41,7 +40,8 @@ function AppPage(props) {
     }
 
     function handleUnplacedNoteClick(id) {
-        const newText = prompt('Enter new text:');
+        const note = unplacedNotes.find((note) => note.id === id);
+        const newText = prompt('Enter new text:', note.text);
         if (newText) {
             const newUnplacedNotes = unplacedNotes.map((note) => {
                 if (note.id === id) {
@@ -53,28 +53,10 @@ function AppPage(props) {
         }
     }
 
-    function handleSave() {
-        const notes = {unplacedNotes, placedNotes, rows, columns};
-        const notesJson = JSON.stringify(notes);
-        localStorage.setItem('notes', notesJson);
-    }
-
     function handleSaveWithName(name) {
-        // const name = prompt('Enter name to store the current notes under:');
         const notes = {unplacedNotes, placedNotes, rows, columns};
         const notesJson = JSON.stringify(notes);
         localStorage.setItem(name, notesJson);
-    }
-
-    function handleLoad(name) {
-        if (localStorage.getItem(name)) {
-            const notesJson = localStorage.getItem(name);
-            const notes = JSON.parse(notesJson);
-            setUnplacedNotes(notes.unplacedNotes);
-            setPlacedNotes(notes.placedNotes);
-            setRows(notes.rows);
-            setColumns(notes.columns);
-        }
     }
 
     function setNotes(notes) {
@@ -87,7 +69,6 @@ function AppPage(props) {
     return (
         <div>
             <InstructionModal isOpen={instructionModalOpen} onClose={() => setInstructionModalOpen(false)}/>
-            <LoadNotesModal isOpen={loadNotesModalOpen} onClose={handleLoad} setModalClose={() => setLoadNotesModalOpen(false)}/>
             <ManageNotesModal
                 isOpen={manageNotesModalOpen}
                 setModalClose={() => setManageNotesModalOpen(false)}
