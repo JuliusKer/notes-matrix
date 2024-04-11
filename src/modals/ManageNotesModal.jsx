@@ -3,6 +3,7 @@ import {Select} from "../components/Select";
 import {useState} from "react";
 import {map} from "lodash";
 import {TextInput} from "../components/TextInput";
+import {FileInput} from "../components/FileInput";
 
 export function ManageNotesModal(props) {
     const [selectedNote, setSelectedNote] = useState('');
@@ -37,17 +38,6 @@ export function ManageNotesModal(props) {
         link.click();
         URL.revokeObjectURL(link.href);
     };
-
-    const loadNotesFromFile = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const notesJson = e.target.result;
-            const notes = JSON.parse(notesJson);
-            props.setNotes(notes);
-        }
-        reader.readAsText(file);
-    }
 
     const displayNotes = (notes) => (
         <div>
@@ -126,10 +116,7 @@ export function ManageNotesModal(props) {
                             </span>
                             <span className='container'>
                                 <p>File</p>
-                                <button className='loadButton'
-                                    onClick={loadNotesFromFile}>
-                                    Load
-                                </button>
+                                <FileInput onLoad={props.setNotes} label='Load'/>
                                 <button className='submitButton' onClick={saveNotesToFile}>
                                     Save
                                 </button>
@@ -137,7 +124,7 @@ export function ManageNotesModal(props) {
                         </div>
                     </div>
                     <div>
-                        {displayNotes(notes)}
+                        {notes && displayNotes(notes)}
                     </div>
                 </div>
             )}
